@@ -1,0 +1,66 @@
+local function refuel()
+    if turtle.getFuelLevel() ~= "unlimited" then
+        while turtle.getFuelLevel() < turtle.getFuelLimit() and
+    turtle.getItemCount(turtle.getSelectedSlot()) > 0 do    
+            turtle.refuel(1)
+            end
+        else
+            turtle.refuel()
+        end
+end
+
+local function dig_row()
+    for i = 1, width do
+    turtle.dig()
+    turtle.forward()
+    sleep()
+    end
+end
+
+local function dig_area()
+    for h = 1, width do
+        dig_row()
+        if direction == 0 then
+            turtle.turnRight()
+            turtle.dig()
+            turtle.forward()
+            turtle.turnRight()
+            direction = 1
+            sleep()
+            else
+            turtle.turnLeft()
+            turtle.dig()
+            turtle.forward()
+            turtle.turnLeft()
+            direction = 0
+            sleep()
+            end
+        end
+    end
+
+local function dig_quarry()
+    for j = 1, depth do
+    dig_area()
+    turtle.digDown()
+    turtle.down()
+    if pirection == 0 then
+    turtle.turnLeft()
+    pirection = 1
+    else    
+    turtle.turnRight()
+    pirection = 0
+    end
+    sleep()
+end
+end
+    print("Width:")
+    width = tonumber(read())
+    
+    print("Depth:")
+    depth = tonumber(read())
+    
+    refuel()
+    direction = 0
+    pirection = 1
+    dig_quarry()
+    sleep()
